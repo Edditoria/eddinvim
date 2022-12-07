@@ -1,5 +1,6 @@
 -- FILE: Configs for key-bindings / key map.
 -- NOTE: `desc` is used for <Plug>which-key.
+-- NOTE: Some keymaps about LSP: on_attach_lsp() in plugins.lua file.
 
 vim.keymap.set('n', 'q', '<Nop>', { noremap = true, silent = true }) -- to prevent qq-recording.
 vim.keymap.set('x', 'q', '<Nop>', { noremap = true, silent = true }) -- to prevent qq-recording.
@@ -48,7 +49,6 @@ local function setup_telescope_keymap()
 	vim.keymap.set('n', '<Leader>hk', '<cmd>Telescope keymaps<CR>', { desc = '<Tel>Keymaps...', noremap = true })
 end
 setup_telescope_keymap()
-
 
 vim.opt.timeoutlen = 500 -- ms; Default: 1000.
 local function setup_whichkey()

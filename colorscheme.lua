@@ -8,11 +8,11 @@ vim.g.onedark_config = {
 	style = 'warmer', -- 'dark' (default), 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'.
 }
 
-local ok, _ = pcall(vim.cmd, 'colo onedark')
--- local ok, _ = pcall(vim.cmd, 'colo gruvbox')
--- local ok, _ = pcall(vim.cmd, 'colo wwdc16')
+local ok, _ = pcall(vim.cmd, 'colorscheme onedark')
+-- local ok, _ = pcall(vim.cmd, 'colorscheme gruvbox')
+-- local ok, _ = pcall(vim.cmd, 'colorscheme wwdc16')
 if not ok then
-	vim.cmd 'color default'
+	vim.cmd [[colorscheme default]]
 end
 
 -- Plugin: Lightline

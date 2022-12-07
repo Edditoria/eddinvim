@@ -55,10 +55,10 @@ vim.cmd [[
 let g:is_showing_eol = 0
 function ToggleShowEOL()
 	if g:is_showing_eol
-		let g:is_showing_eol=0
+		let g:is_showing_eol = 0
 		setlocal listchars=tab:→\ ,space:·,nbsp:␣,trail:•,precedes:«,extends:» ",eol:¶
 	else
-		let g:is_showing_eol=1
+		let g:is_showing_eol = 1
 		setlocal listchars=tab:→\ ,space:·,nbsp:␣,trail:•,precedes:«,extends:»,eol:¶
 	endif
 endfunction

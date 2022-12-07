@@ -208,4 +208,3 @@ setup_todo_comments()
 -- <Plug>which-key : keymap.lua
 -- <Plug>telescope keymap : keymap.lua
 -- Color schemes : colorscheme.lua
-
