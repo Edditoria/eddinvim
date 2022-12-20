@@ -176,7 +176,7 @@ local function setup_treesitter()
 		return -- early.
 	end
 	local configs = {
-		ensure_installed = { 'html', 'javascript', 'jsdoc', 'typescript', 'tsx' }, -- TODO: 'maintained' doesn't work.
+		ensure_installed = { 'html', 'javascript', 'jsdoc', 'typescript', 'tsx', 'lua', 'vim' }, -- TODO: 'maintained' doesn't work.
 		sync_install = true,
 		highlight = {
 			enable = true, -- as default.
