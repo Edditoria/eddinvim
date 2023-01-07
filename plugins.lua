@@ -27,8 +27,8 @@ Plug 'neovim/nvim-lspconfig' -- Wrapper of vim.lsp.* functions.
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
--- Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp' -- for auto-completion. TODO: Setup later.
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp' -- for auto-completion. TODO: Need setup in details.
 
 -- UI/UX
 -- -----
@@ -97,6 +97,36 @@ local function setup_telescope()
 	})
 end
 setup_telescope()
+
+local function setup_cmp()
+	local ok, cmp = pcall(require, 'cmp')
+	if not ok then
+		print('<Plug>cmp not loaded.')
+		return -- early.
+	end
+	cmp.setup({
+		sources = cmp.config.sources({
+			{ name = 'nvim_lsp' },
+			{ name = 'path' },
+			{ name = 'buffer' },
+		}) -- depends on other <Plug>.
+	})
+	cmp.setup.cmdline('/', {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = {
+			{ name = 'buffer' },
+		},
+	})
+	cmp.setup.cmdline(':', {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = cmp.config.sources({
+			{ name = 'path' },
+		}, {
+			{ name = 'cmdline' },
+		})
+	})
+end
+setup_cmp()
 
 local function on_attach_lsp(client, bufnr)
 	vim.keymap.set('n', '<Leader>K', vim.lsp.buf.hover, { buffer = bufnr, desc = '<LSP>Hover doc' })
