@@ -159,9 +159,9 @@ local function setup_lsp(on_attach_fn)
 	-- NOTE: Have to setup in order of: mason, mason_lspconfig, lspconfig.
 	mason.setup()
 	mason_lspconfig.setup({
-		ensure_installed = { 'denols', 'tsserver', 'sumneko_lua' },
+		ensure_installed = { 'denols', 'tsserver', 'lua_ls' },
 	})
-	lspconfig.sumneko_lua.setup({
+	lspconfig.lua_ls.setup({
 		on_attach = on_attach_fn,
 		settings = {
 			Lua = { diagnostics = { globals = { 'vim' } } },
