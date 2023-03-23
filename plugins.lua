@@ -185,7 +185,6 @@ local function setup_comment_plug()
 	end
 	comment_plug.setup({
 		ignore = '^$', -- to ignore empty lines.
-		toggler = { line = '<Leader>/', block = '<Leader>?' }, -- instead of default keymap: 'gcc', 'gbc'.
 	})
 end
 setup_comment_plug()
