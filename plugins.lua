@@ -10,7 +10,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 -- ---------
 
 -- Plug 'editorconfig/editorconfig-vim' -- does not work.
-Plug 'gpanders/editorconfig.nvim' -- NOTE: Will be built-in in nvim v9.
+-- Plug 'gpanders/editorconfig.nvim' -- is now built-in in nvim v0.9.0.
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim' -- Many utils and dep of plugin:telescope.nvim.
 Plug('nvim-telescope/telescope.nvim', { branch = '0.1.x' })
