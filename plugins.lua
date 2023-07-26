@@ -91,7 +91,6 @@ local function setup_telescope()
 		},
 		pickers = {
 			find_files = {
-				-- no_ignore = true, -- TODO: WARN message when `<Space>fF`.
 				hidden = true, -- to show hidden files.
 			}
 		}

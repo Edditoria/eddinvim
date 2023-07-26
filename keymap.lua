@@ -37,8 +37,7 @@ local function setup_telescope_keymap()
 	vim.keymap.set('n', '<Leader>fF', function()
 		builtin.find_files({
 			prompt_title = 'Find All Files',
-			no_ignore = true, -- TODO: doesn't work.
-			hidden = true,
+			no_ignore = true,
 		})
 		end, { desc = '<Tel>Find all...', noremap = true })
 	vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '<Tel>Live-Grep...', noremap = true })
