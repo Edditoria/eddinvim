@@ -34,6 +34,10 @@ Plug 'hrsh7th/nvim-cmp' -- for auto-completion. TODO: Need setup in details.
 -- UI/UX
 -- -----
 
+local disable_devicons = os.getenv('DISABLE_DEVICONS')
+if not (disable_devicons == 'true' or disable_devicons == '1') then
+	Plug 'nvim-tree/nvim-web-devicons'
+end
 Plug 'numToStr/Comment.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'itchyny/lightline.vim' -- for status line.
