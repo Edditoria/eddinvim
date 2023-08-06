@@ -46,6 +46,7 @@ Plug 'folke/which-key.nvim'
 Plug('nvim-treesitter/nvim-treesitter') -- , { ['do'] = vim.cmd [[TSUpdate]] })
 -- NOTE: Run `checkhealth nvim-treesitter` regularly.
 Plug 'folke/todo-comments.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 -- Color Scheme
 -- ------------
@@ -79,10 +80,18 @@ local function setup_telescope()
 	end
 	telescope.setup({
 		defaults = {
+			mappings = {
+				i = {
+					['<C-i>'] = require('telescope.actions.layout').toggle_preview,
+				},
+				n = {
+					['<C-i>'] = require('telescope.actions.layout').toggle_preview,
+				},
+			},
 			layout_strategy = 'flex',
 			layout_config = {
-				horizontal = { preview_cutoff = 80 },
-				vertical = { preview_cutoff = 30 },
+				horizontal = { preview_cutoff = 60, preview_width = 0.6 },
+				vertical = { preview_cutoff = 25, preview_height = 0.5 },
 				width = 0.9,
 			},
 			file_ignore_patterns = {
@@ -97,8 +106,14 @@ local function setup_telescope()
 			find_files = {
 				hidden = true, -- to show hidden files.
 			}
-		}
+		},
+		extensions = {
+			file_browser = {
+				hijack_netrw = true,
+			},
+		},
 	})
+	telescope.load_extension('file_browser')
 end
 setup_telescope()
 
