@@ -109,13 +109,32 @@ local function setup_telescope()
 		},
 		extensions = {
 			file_browser = {
+				display_stat = false, -- originally a table.
+				grouped = true,
+				hidden= { file_browser = true, folder_browser = true },
 				hijack_netrw = true,
+				respect_gitignore = false,
+				select_buffer = true,
 			},
 		},
 	})
-	telescope.load_extension('file_browser')
 end
 setup_telescope()
+
+local function setup_telescope_file_browser()
+	local tsOk, telescope = pcall(require, 'telescope')
+	if not tsOk then
+		print('<Plug>telescope-file-browser: Telescope not loaded.')
+		return
+	end
+	local ok, _ = pcall(require, 'telescope._extensions.file_browser')
+	if not ok then
+		print('<Plug>telescope-file-browser not loaded.')
+		return
+	end
+	telescope.load_extension('file_browser')
+end
+setup_telescope_file_browser()
 
 local function setup_cmp()
 	local ok, cmp = pcall(require, 'cmp')
