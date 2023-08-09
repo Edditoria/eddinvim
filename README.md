@@ -41,6 +41,7 @@ vim.opt.fileencoding = 'utf-8'
 -- Require them one-by-one:
 require('eddinvim.base')
 require('eddinvim.plugins')
+require('eddinvim.commands')
 require('eddinvim.keymap')
 require('eddinvim.colorscheme')
 ```
