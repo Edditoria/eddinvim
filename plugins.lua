@@ -105,7 +105,10 @@ local function setup_telescope()
 		pickers = {
 			find_files = {
 				hidden = true, -- to show hidden files.
-			}
+			},
+			current_buffer_fuzzy_find = {
+				sorting_strategy = 'ascending',
+			},
 		},
 		extensions = {
 			file_browser = {

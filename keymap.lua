@@ -33,7 +33,8 @@ local function setup_telescope_keymap()
 			prompt_title = 'Quick Open', previewer = false
 		}))
 		end, { desc = 'Quick open...', noremap = true })
-	vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers<CR>', { desc = '<Tel>Buffers...', noremap = true })
+	vim.keymap.set('n', '<Leader>bb', '<cmd>Telescope buffers<CR>', { desc = '<Tel>Buffers...', noremap = true })
+	vim.keymap.set('n', '<Leader>bf', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '<Tel>Current fuzzy...', noremap = true })
 	vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { desc = '<Tel>Find files...', noremap = true })
 	vim.keymap.set('n', '<Leader>fF', function()
 		builtin.find_files({
@@ -67,6 +68,7 @@ local function setup_whichkey()
 		['<Leader>'] = { name = '<Which-Key>' },
 		['['] = { name = 'Previous' },
 		[']'] = { name = 'Next' },
+		['<Leader>b'] = { name = 'Buffers' },
 		['<Leader>d'] = { name = 'Diagnostics' },
 		['<Leader>f'] = { name = 'Files' },
 		['<Leader>h'] = { name = 'Help' },
