@@ -200,7 +200,10 @@ local function setup_lsp(on_attach_fn)
 	-- NOTE: Have to setup in order of: mason, mason_lspconfig, lspconfig.
 	mason.setup()
 	mason_lspconfig.setup({
-		ensure_installed = { 'denols', 'tsserver', 'lua_ls' },
+		ensure_installed = { 'denols', 'tsserver', 'gopls', 'lua_ls' },
+	})
+	lspconfig.gopls.setup({
+		on_attach = on_attach_fn,
 	})
 	lspconfig.lua_ls.setup({
 		on_attach = on_attach_fn,
@@ -246,7 +249,7 @@ local function setup_treesitter()
 		return -- early.
 	end
 	local configs = {
-		ensure_installed = { 'html', 'javascript', 'jsdoc', 'typescript', 'tsx', 'lua', 'vim' },
+		ensure_installed = { 'html', 'javascript', 'jsdoc', 'typescript', 'tsx', 'go', 'lua', 'vim' },
 		sync_install = true,
 		highlight = {
 			enable = true, -- as default.
