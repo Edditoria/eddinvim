@@ -29,6 +29,8 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp' -- for auto-completion. TODO: Need setup in details.
 
 -- UI/UX
@@ -145,14 +147,29 @@ local function setup_cmp()
 		print('<Plug>cmp not loaded.')
 		return -- early.
 	end
+	-- vim.opt.completeopt={ 'menu', 'menuone', 'noselect' }
 	cmp.setup({
+		snippet = {
+			expand = function(args)
+				vim.fn['vsnip#anonymous'](args.body)
+			end,
+		},
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		mapping = cmp.mapping.preset.insert({
+			['<CR>'] = cmp.mapping.confirm({ select = true }),
+		}),
 		sources = cmp.config.sources({
 			{ name = 'nvim_lsp' },
-			{ name = 'path' },
+			{ name = 'vsnip' },
+			-- { name = 'path' },
+		}, {
 			{ name = 'buffer' },
 		}) -- depends on other <Plug>.
 	})
-	cmp.setup.cmdline('/', {
+	cmp.setup.cmdline({ '/', '?' }, {
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
 			{ name = 'buffer' },
@@ -181,7 +198,7 @@ local function on_attach_lsp(client, bufnr)
 end
 
 local function setup_lsp(on_attach_fn)
-	local ok, mason, mason_lspconfig, lspconfig
+	local ok, mason, lspconfig, mason_lspconfig, cmp_nvim_lsp
 	ok, mason = pcall(require, 'mason')
 	if not ok then
 		print('<Plug>mason not loaded.')
@@ -197,25 +214,36 @@ local function setup_lsp(on_attach_fn)
 		print('<Plug>mason-lspconfig not loaded.')
 		return -- early.
 	end
-	-- NOTE: Have to setup in order of: mason, mason_lspconfig, lspconfig.
+	ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+	if not ok then
+		print('<Plug>cmp_nvim_lsp not loaded.')
+		return -- early.
+	end
+
+	local capabilities = cmp_nvim_lsp.default_capabilities()
+	-- NOTE: Have to setup in order of: mason, mason_lspconfig, lspconfig. Requires cmp-nvim-lsp to run properly.
 	mason.setup()
 	mason_lspconfig.setup({
 		ensure_installed = { 'denols', 'tsserver', 'gopls', 'lua_ls' },
 	})
 	lspconfig.gopls.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_fn,
 	})
 	lspconfig.lua_ls.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_fn,
 		settings = {
 			Lua = { diagnostics = { globals = { 'vim' } } },
 		},
 	})
 	lspconfig.denols.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_fn,
 		root_dir = lspconfig.util.root_pattern({ 'deno.json', 'deno.jsonc' }),
 	})
 	lspconfig.tsserver.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_fn,
 		root_dir = lspconfig.util.root_pattern({ 'package.json', 'tsconfig.json', 'jsconfig.json' }),
 	})
