@@ -221,10 +221,20 @@ local function setup_lsp(on_attach_fn)
 	end
 
 	local capabilities = cmp_nvim_lsp.default_capabilities()
+	-- TODO: Not sure this capabilities do:
+	local capabilities_vscode = vim.lsp.protocol.make_client_capabilities()
+	capabilities_vscode.textDocument.completion.completionItem.snippetSupport = true
+
 	-- NOTE: Have to setup in order of: mason, mason_lspconfig, lspconfig. Requires cmp-nvim-lsp to run properly.
 	mason.setup()
 	mason_lspconfig.setup({
-		ensure_installed = { 'denols', 'tsserver', 'gopls', 'lua_ls' },
+		ensure_installed = {
+			'gopls', 'lua_ls',
+			-- Coop with vscode-langservers-extracted via npm:
+			'html', 'cssls', 'jsonls', 'eslint',
+			-- For more web dev env:
+			'tsserver', 'denols',
+		},
 	})
 	lspconfig.gopls.setup({
 		capabilities = capabilities,
@@ -236,6 +246,27 @@ local function setup_lsp(on_attach_fn)
 		settings = {
 			Lua = { diagnostics = { globals = { 'vim' } } },
 		},
+	})
+	-- Ref for html, cssls, jsonls and eslint: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+	lspconfig.html.setup({
+		capabilities = capabilities_vscode,
+		on_attach = on_attach_fn,
+	})
+	lspconfig.cssls.setup({
+		capabilities = capabilities_vscode,
+		on_attach = on_attach_fn,
+	})
+	lspconfig.jsonls.setup({
+		capabilities = capabilities_vscode,
+		on_attach = on_attach_fn,
+	})
+	lspconfig.eslint.setup({
+		on_attach = function(client, bufnr)
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				buffer = bufnr,
+				command = "EslintFixAll",
+			})
+		end,
 	})
 	lspconfig.denols.setup({
 		capabilities = capabilities,
@@ -277,7 +308,11 @@ local function setup_treesitter()
 		return -- early.
 	end
 	local configs = {
-		ensure_installed = { 'html', 'javascript', 'jsdoc', 'typescript', 'tsx', 'go', 'lua', 'vim' },
+		ensure_installed = {
+			'go', 'lua', 'vim',
+			'html', 'css', 'javascript', 'jsdoc',
+			'typescript', 'tsx',
+		},
 		sync_install = true,
 		highlight = {
 			enable = true, -- as default.
