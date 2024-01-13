@@ -233,7 +233,7 @@ local function setup_lsp(on_attach_fn)
 			-- Coop with vscode-langservers-extracted via npm:
 			'html', 'cssls', 'jsonls', 'eslint',
 			-- For more web dev env:
-			'tsserver', 'denols',
+			'tsserver', 'denols', 'svelte',
 		},
 	})
 	lspconfig.gopls.setup({
@@ -268,15 +268,19 @@ local function setup_lsp(on_attach_fn)
 			})
 		end,
 	})
+	lspconfig.tsserver.setup({
+		capabilities = capabilities,
+		on_attach = on_attach_fn,
+		root_dir = lspconfig.util.root_pattern({ 'package.json', 'tsconfig.json', 'jsconfig.json' }),
+	})
 	lspconfig.denols.setup({
 		capabilities = capabilities,
 		on_attach = on_attach_fn,
 		root_dir = lspconfig.util.root_pattern({ 'deno.json', 'deno.jsonc' }),
 	})
-	lspconfig.tsserver.setup({
+	lspconfig.svelte.setup({
 		capabilities = capabilities,
 		on_attach = on_attach_fn,
-		root_dir = lspconfig.util.root_pattern({ 'package.json', 'tsconfig.json', 'jsconfig.json' }),
 	})
 end
 setup_lsp(on_attach_lsp)
@@ -312,6 +316,7 @@ local function setup_treesitter()
 			'go', 'lua', 'vim',
 			'html', 'css', 'javascript', 'jsdoc',
 			'typescript', 'tsx',
+			'svelte',
 		},
 		sync_install = true,
 		highlight = {
