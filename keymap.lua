@@ -18,6 +18,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diag', norema
 vim.keymap.set('n', '<Leader>d[', vim.diagnostic.goto_prev, { desc = 'Prev diag, [d', noremap = true })
 vim.keymap.set('n', '<Leader>d]', vim.diagnostic.goto_next, { desc = 'Next diag, ]d', noremap = true })
 vim.keymap.set('n', '<Leader>dd', vim.diagnostic.open_float, { desc = 'Popup diag', noremap = true })
+vim.keymap.set('n', '<Leader>dD', '<cmd>Telescope diagnostics<CR>', { desc = '<Tel>Workspace diag...', noremap = true })
 vim.keymap.set('n', '<Leader>h<C-t>', '<cmd>pop<CR>', { desc = 'Go prev :tags', noremap = true })
 vim.keymap.set('n', '<Leader>h<C-o>', '<C-o>', { desc = 'Go prev :jumps', noremap = true })
 vim.keymap.set('n', '<Leader>h<C-i>', '<C-i>', { desc = 'Go next :jumps', noremap = true })

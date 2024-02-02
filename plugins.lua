@@ -194,7 +194,6 @@ local function on_attach_lsp(client, bufnr)
 	vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.rename, { buffer = bufnr, desc = '<LSP>Rename symbol' })
 	vim.keymap.set('n', '<Leader>la', vim.lsp.buf.code_action, { buffer = bufnr, desc = '<LSP>Code action' })
 	vim.keymap.set('n', '<Leader>lr', '<cmd>Telescope lsp_references<CR>', { desc = '<Tel>References...' })
-	vim.keymap.set('n', '<Leader>ld', '<cmd>Telescope diagnostics<CR>', { desc = '<Tel>Diagnostics...' })
 end
 
 local function setup_lsp(on_attach_fn)
