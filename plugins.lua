@@ -232,7 +232,7 @@ local function setup_lsp(on_attach_fn)
 			-- Coop with vscode-langservers-extracted via npm:
 			'html', 'cssls', 'jsonls', 'eslint',
 			-- For more web dev env:
-			'tsserver', 'denols', 'svelte',
+			'ts_ls', 'denols', 'svelte',
 		},
 	})
 	lspconfig.gopls.setup({
@@ -267,7 +267,7 @@ local function setup_lsp(on_attach_fn)
 			})
 		end,
 	})
-	lspconfig.tsserver.setup({
+	lspconfig.ts_ls.setup({
 		capabilities = capabilities,
 		on_attach = on_attach_fn,
 		root_dir = lspconfig.util.root_pattern({ 'package.json', 'tsconfig.json', 'jsconfig.json' }),
