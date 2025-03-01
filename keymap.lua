@@ -53,32 +53,31 @@ local function setup_telescope_keymap()
 end
 setup_telescope_keymap()
 
-vim.opt.timeoutlen = 500 -- ms; Default: 1000.
 local function setup_whichkey()
 	local ok, whichkey = pcall(require, 'which-key')
 	if not ok then
 		print('<Plug>which-key not loaded.')
 		return -- early.
 	end
-	local configs = {
-		triggers_blacklist = {
-			-- n = { 'v' }, -- to ignore when entering Visual mode from Normal mode.
-		},
+	local setupOpts = {
+		delay = 500, -- ms; Instead of vim.opt.timeoutlen
+		-- TODO: Add <Leader> during 'x' mode. Disable v-key in 'n' mode.
+		-- triggers = {{ '<auto>', mode = 'nso' },{ '<Leader>', mode = { 'n', 'x' }}},
 	}
 	local mappings = {
-		['<Leader>'] = { name = '<Which-Key>' },
-		['['] = { name = 'Previous' },
-		[']'] = { name = 'Next' },
-		['<Leader>b'] = { name = 'Buffers' },
-		['<Leader>d'] = { name = 'Diagnostics' },
-		['<Leader>f'] = { name = 'Files' },
-		['<Leader>h'] = { name = 'Help' },
-		['<Leader>l'] = { name = 'LSP' },
+		{ '<Leader>', group = '<Which-Key>' },
+		{ '<Leader>b', group = 'Buffers' },
+		{ '<Leader>d', group = 'Diagnostics' },
+		{ '<Leader>f', group = 'Files' },
+		{ '<Leader>h', group = 'Help' },
+		{ '<Leader>l', group = 'LSP' },
+		{ '[', group = 'Previous' },
+		{ ']', group = 'Next' },
 	}
-	local options = {
+	local mappingOpts = {
 		-- prefix = '<Leader>',
 	}
-	whichkey.setup(configs)
-	whichkey.register(mappings, options)
+	whichkey.setup(setupOpts)
+	whichkey.add(mappings, mappingOpts)
 end
 setup_whichkey()

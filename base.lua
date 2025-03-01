@@ -8,8 +8,6 @@ vim.opt.fileencoding = 'utf-8'
 -- Features
 -- ========
 
-vim.keymap.set('n', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.keymap.set('x', '<Space>', '<Nop>', { noremap = true, silent = true })
 -- vim.g.mapleader = ','
 -- vim.g.maplocalleader = ','
 vim.g.mapleader = ' ' -- <Space> -- TODO: Will trigger <Space> in visual mode.
