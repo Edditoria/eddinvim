@@ -149,17 +149,25 @@ local function setup_cmp()
 	end
 	-- vim.opt.completeopt={ 'menu', 'menuone', 'noselect' }
 	cmp.setup({
+		experimental = { ghost_text = true },
 		snippet = {
 			expand = function(args)
 				vim.fn['vsnip#anonymous'](args.body)
 			end,
 		},
 		window = {
-			completion = cmp.config.window.bordered(),
-			documentation = cmp.config.window.bordered(),
+			-- completion = cmp.config.window.bordered(),
+			-- documentation = cmp.config.window.bordered(),
 		},
 		mapping = cmp.mapping.preset.insert({
-			['<CR>'] = cmp.mapping.confirm({ select = true }),
+			['<C-Space>'] = cmp.mapping.complete(), -- to invoke cmp menu.
+			['<CR>'] = cmp.mapping.confirm({ select = false }), --Recommended by nvim-cmp: <CR>.
+			['<C-e>'] = cmp.mapping.abort(), -- As default.
+			['<C-n>'] = cmp.mapping.select_next_item(), -- As default.
+			['<C-p>'] = cmp.mapping.select_prev_item(), -- As default.
+			-- TODO: <C-f> and <C-b> not working:
+			['<C-f>'] = cmp.mapping.scroll_docs(4), -- Recommended by nvim-cmp: <C-f>.
+			['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Recommended by nvim-cmp: <C-b>.
 		}),
 		sources = cmp.config.sources({
 			{ name = 'nvim_lsp' },
@@ -181,7 +189,8 @@ local function setup_cmp()
 			{ name = 'path' },
 		}, {
 			{ name = 'cmdline' },
-		})
+		}),
+		matching = { disallow_symbol_nonprefix_matching = false },
 	})
 end
 setup_cmp()
