@@ -237,7 +237,7 @@ local function setup_lsp(on_attach_fn)
 	mason.setup()
 	mason_lspconfig.setup({
 		ensure_installed = {
-			'gopls', 'lua_ls',
+			'gopls', 'lua_ls', 'bashls',
 			-- Coop with vscode-langservers-extracted via npm:
 			'html', 'cssls', 'jsonls', 'eslint',
 			-- For more web dev env:
@@ -254,6 +254,10 @@ local function setup_lsp(on_attach_fn)
 		settings = {
 			Lua = { diagnostics = { globals = { 'vim' } } },
 		},
+	})
+	lspconfig.bashls.setup({
+		capabilities = capabilities,
+			on_attach = on_attach_fn,
 	})
 	-- Ref for html, cssls, jsonls and eslint: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 	lspconfig.html.setup({
@@ -321,7 +325,7 @@ local function setup_treesitter()
 	end
 	local configs = {
 		ensure_installed = {
-			'go', 'lua', 'vim',
+			'go', 'lua', 'vim', 'bash',
 			'html', 'css', 'javascript', 'jsdoc',
 			'typescript', 'tsx',
 			'svelte',
