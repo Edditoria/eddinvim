@@ -32,6 +32,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp' -- for auto-completion. TODO: Need setup in details.
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 
 -- UI/UX
 -- -----
@@ -170,6 +171,7 @@ local function setup_cmp()
 			['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Recommended by nvim-cmp: <C-b>.
 		}),
 		sources = cmp.config.sources({
+			{ name = 'nvim_lsp_signature_help' },
 			{ name = 'nvim_lsp' },
 			{ name = 'vsnip' },
 			-- { name = 'path' },
@@ -196,6 +198,7 @@ end
 setup_cmp()
 
 local function on_attach_lsp(client, bufnr)
+	vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = '<LSP>SignHelp'})
 	vim.keymap.set('n', '<Leader>K', vim.lsp.buf.hover, { buffer = bufnr, desc = '<LSP>Hover doc' })
 	vim.keymap.set('n', '<Leader>lD', vim.lsp.buf.definition, { buffer = bufnr, desc = '<LSP>Go definition' })
 	vim.keymap.set('n', '<Leader>lI', vim.lsp.buf.implementation, { buffer = bufnr, desc = '<LSP>Go implementation' })
