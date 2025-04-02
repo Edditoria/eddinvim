@@ -27,14 +27,6 @@ local function setup_telescope_keymap()
 	local ok, telescope = pcall(require, 'telescope')
 	if not ok then return end -- early.
 	local builtin = require('telescope.builtin')
-	local themes = require('telescope.themes')
-
-	-- Quick Open view using `telescope.builtin.find_files`.
-	local function quick_open()
-		builtin.find_files(themes.get_dropdown({
-			prompt_title = 'Quick Open', previewer = false
-		}))
-	end
 
 	-- Find All Files view using `telescope.builtin.find_files`.
 	local function find_all_files()
@@ -44,7 +36,7 @@ local function setup_telescope_keymap()
 		})
 	end
 
-	vim.keymap.set('n', '<Leader>o', quick_open, { desc = 'Quick open...', noremap = true })
+	vim.keymap.set('n', '<Leader>o', '<cmd>QuickOpenFile<CR>', { desc = 'Quick open...', noremap = true })
 	vim.keymap.set('n', '<Leader>bb', builtin.buffers, { desc = '<Tel>Buffers...', noremap = true })
 	vim.keymap.set('n', '<Leader>bf', builtin.current_buffer_fuzzy_find, { desc = '<Tel>Current fuzzy...', noremap = true })
 	vim.keymap.set('n', '<Leader>ff', builtin.find_files, { desc = '<Tel>Find files...', noremap = true })
