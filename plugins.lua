@@ -91,8 +91,10 @@ local function setup_telescope()
 					['<C-i>'] = require('telescope.actions.layout').toggle_preview,
 				},
 			},
+			sorting_strategy = 'ascending',
 			layout_strategy = 'flex',
 			layout_config = {
+				prompt_position = 'top',
 				horizontal = { preview_cutoff = 60, preview_width = 0.6 },
 				vertical = { preview_cutoff = 25, preview_height = 0.5 },
 				width = 0.9,
@@ -107,6 +109,9 @@ local function setup_telescope()
 		},
 		pickers = {
 			find_files = {
+				find_command = vim.fn.executable('fd') == 1
+					and { "fd", "--type", "file" }
+					or nil,
 				hidden = true, -- to show hidden files.
 			},
 			current_buffer_fuzzy_find = {
