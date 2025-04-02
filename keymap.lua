@@ -26,30 +26,36 @@ vim.keymap.set('n', '<Leader>h<C-i>', '<C-i>', { desc = 'Go next :jumps', norema
 local function setup_telescope_keymap()
 	local ok, telescope = pcall(require, 'telescope')
 	if not ok then return end -- early.
-
 	local builtin = require('telescope.builtin')
 	local themes = require('telescope.themes')
-	vim.keymap.set('n', '<Leader>o', function()
+
+	-- Quick Open view using `telescope.builtin.find_files`.
+	local function quick_open()
 		builtin.find_files(themes.get_dropdown({
 			prompt_title = 'Quick Open', previewer = false
 		}))
-		end, { desc = 'Quick open...', noremap = true })
-	vim.keymap.set('n', '<Leader>bb', '<cmd>Telescope buffers<CR>', { desc = '<Tel>Buffers...', noremap = true })
-	vim.keymap.set('n', '<Leader>bf', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '<Tel>Current fuzzy...', noremap = true })
-	vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { desc = '<Tel>Find files...', noremap = true })
-	vim.keymap.set('n', '<Leader>fF', function()
+	end
+
+	-- Find All Files view using `telescope.builtin.find_files`.
+	local function find_all_files()
 		builtin.find_files({
 			prompt_title = 'Find All Files',
 			no_ignore = true,
 		})
-		end, { desc = '<Tel>Find all...', noremap = true })
-	vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '<Tel>Live-Grep...', noremap = true })
-	vim.keymap.set('n', '<Leader>fs', '<cmd>Telescope grep_string<CR>', { desc = '<Tel>Grep string...', noremap = true })
+	end
+
+	vim.keymap.set('n', '<Leader>o', quick_open, { desc = 'Quick open...', noremap = true })
+	vim.keymap.set('n', '<Leader>bb', builtin.buffers, { desc = '<Tel>Buffers...', noremap = true })
+	vim.keymap.set('n', '<Leader>bf', builtin.current_buffer_fuzzy_find, { desc = '<Tel>Current fuzzy...', noremap = true })
+	vim.keymap.set('n', '<Leader>ff', builtin.find_files, { desc = '<Tel>Find files...', noremap = true })
+	vim.keymap.set('n', '<Leader>fF', find_all_files, { desc = '<Tel>Find all...', noremap = true })
+	vim.keymap.set('n', '<Leader>fg', builtin.live_grep, { desc = '<Tel>Live-Grep...', noremap = true })
+	vim.keymap.set('n', '<Leader>fs', builtin.grep_string, { desc = '<Tel>Grep string...', noremap = true })
 	vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope file_browser<CR>', { desc = '<Tel>Browse...', noremap = true })
-	vim.keymap.set('n', '<Leader>fr', '<cmd>Telescope oldfiles<CR>', { desc = '<Tel>Recent files...', noremap = true })
-	vim.keymap.set('n', '<Leader>ht', '<cmd>Telescope help_tags<CR>', { desc = '<Tel>Tags...', noremap = true })
-	vim.keymap.set('n', '<Leader>hc', '<cmd>Telescope commands<CR>', { desc = '<Tel>Commands...', noremap = true })
-	vim.keymap.set('n', '<Leader>hk', '<cmd>Telescope keymaps<CR>', { desc = '<Tel>Keymaps...', noremap = true })
+	vim.keymap.set('n', '<Leader>fr', builtin.oldfiles, { desc = '<Tel>Recent files...', noremap = true })
+	vim.keymap.set('n', '<Leader>ht', builtin.help_tags, { desc = '<Tel>Tags...', noremap = true })
+	vim.keymap.set('n', '<Leader>hc', builtin.commands, { desc = '<Tel>Commands...', noremap = true })
+	vim.keymap.set('n', '<Leader>hk', builtin.keymaps, { desc = '<Tel>Keymaps...', noremap = true })
 end
 setup_telescope_keymap()
 
